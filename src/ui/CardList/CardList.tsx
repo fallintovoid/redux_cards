@@ -1,18 +1,20 @@
 import React from 'react'
-import { Cards } from '../../react-app-env'
+import { Cards, CompleteCard, CompleteCards } from '../../react-app-env'
 import CardListItem from '../CardListItem/CardListItem'
 
 type Props = {
-    cards: Cards
+    cards: CompleteCards
 }
 
 const CardList = ({cards}: Props) => {
 
-    const renderCards = (cards: Cards) => {
+    const renderCards = (cards: CompleteCards) => {
         return cards.map(card => {
             return <CardListItem
                 back={card.back}
-                front={card.front}/>
+                front={card.front}
+                id={card.id}
+                fav={card.fav}/>
         })
     }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { addCompleteCard } from '../../app/slices/cardsReducer'
 import './SwapCard.scss'
+import { v4 } from 'uuid'
 
 type Props = {
     front: string,
@@ -23,7 +24,9 @@ const SwapCard = ({front, back, allAmount, completedAmount, folderId}: Props) =>
                 folderId,
                 card: {
                     front,
-                    back
+                    back,
+                    id: v4(),
+                    fav: false
                 }
             }))
         }

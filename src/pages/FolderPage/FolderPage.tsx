@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import SwapCard from '../../ui/SwapCard/SwapCard'
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from 'react-icons/ai'
 import CardList from '../../ui/CardList/CardList'
+import { setCurrentFolderId } from '../../app/slices/cardsReducer'
 
 type Props = {}
 
@@ -12,7 +13,14 @@ const FolderPage = (props: Props) => {
     const { folderId } = useParams()
     const { cards, name, id, completeCards } = useAppSelector(state => state.cardsReducer.cardFolders.filter(item => item.id === folderId)[0])
     const [cardNumber, setCardNumber] = useState(1)
+    const dispatch = useAppDispatch()
 
+    useEffect(() => {
+        dispatch(setCurrentFolderId(folderId))
+        return () => {
+            dispatch(setCurrentFolderId('0'))
+        }
+    }, [])
 
     const onChangeCard = (number: number) => {
         if ((cardNumber === 1 && number === -1) || (cardNumber === cards.length && number === 1)) {

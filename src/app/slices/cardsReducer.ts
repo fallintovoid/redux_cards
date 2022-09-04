@@ -1,13 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { CardFolders, Card } from "../../react-app-env";
+import { CardFolders, Card, CompleteCard } from "../../react-app-env";
 
 interface InitialState {
-    cardFolders: CardFolders
+    cardFolders: CardFolders,
+    currentFolderId: string
 }
 
 interface AddCompleteCardPayload {
     folderId: string,
-    card: Card
+    card: CompleteCard
+}
+
+interface ToggleFavPayload {
+    folderId: string,
+    cardId: string
 }
 
 const initialState: InitialState = {
@@ -20,15 +26,18 @@ const initialState: InitialState = {
             cards: [
                 {
                     front: '1+1',
-                    back: '2'
+                    back: '2',
+                    id: '912388'
                 }, 
                 {
                     front: '1+3',
-                    back: '4'
+                    back: '4',
+                    id: '9097123'
                 },
                 {
                     front: '1+4',
-                    back: '5'
+                    back: '5',
+                    id: '2768626491'
                 }
             ],
             completeCards: []
@@ -41,12 +50,14 @@ const initialState: InitialState = {
             cards: [
                 {
                     front: '1+1',
-                    back: '2'
+                    back: '2',
+                    id: '12984312840'
                 }
             ],
             completeCards: []
         }
-    ]
+    ],
+    currentFolderId: '0'
 }
 
 const cardsSlice = createSlice({
@@ -57,6 +68,17 @@ const cardsSlice = createSlice({
             const payload: AddCompleteCardPayload = action.payload
 
             state.cardFolders.filter(item => item.id === payload.folderId)[0].completeCards.push(payload.card)
+        },
+        toggleFav: (state, action) => {
+            const payload: ToggleFavPayload = action.payload
+
+            const currFolder = state.cardFolders.filter(item => item.id === payload.folderId)[0]
+            const currCard = currFolder.completeCards.filter(item => item.id === payload.cardId)[0]
+            
+            currCard.fav = !currCard.fav
+        },
+        setCurrentFolderId: (state, action) => {
+            state.currentFolderId = action.payload
         }
     }
 })
@@ -64,5 +86,7 @@ const cardsSlice = createSlice({
 const { reducer, actions } = cardsSlice;
 export { reducer }
 export const {
-    addCompleteCard
+    addCompleteCard,
+    toggleFav,
+    setCurrentFolderId
 } = actions
