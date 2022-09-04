@@ -16,11 +16,10 @@ const Header = (props: Props) => {
                 </Link>
             </li>
         </ul>
-        <div className='cursor-pointer bg-purple-500 p-2 flex items-center text-white rounded-lg'>
+        <div className='cursor-pointer bg-purple-500 p-2 flex items-center text-white rounded-lg hover:bg-purple-600'>
             <Link to='/constructor'>
                 Create new
             </Link>
-            
         </div>
     </div>
   )

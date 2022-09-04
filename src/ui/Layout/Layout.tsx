@@ -9,7 +9,7 @@ const Layout: FC<Props> = ({children}) => {
   return (
     <div>
         <Header/>
-        <main className='w-full h-screen bg-stone-100 px-24 py-10'>
+        <main className='w-full min-h-screen h-full bg-stone-100 px-24 py-10'>
             {children}
         </main>
     </div>
